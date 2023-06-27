@@ -1,0 +1,2 @@
+#!/bin/bash
+echo '{"object":"item","id":"123c9858-87e1-4600-959c-aabcd1130d2a","organizationId":null,"folderId":null,"type":2,"reprompt":0,"name":"name","notes":"-----BEGIN OPENSSH PRIVATE KEY-----\nHAHA you thought :P\n-----END OPENSSH PRIVATE KEY-----","favorite":false,"secureNote":{"type":0},"collectionIds":[],"revisionDate":"2023-11-01T05:50:09.843Z","creationDate":"2023-05-07T16:41:25.853Z","deletedDate":null}'
