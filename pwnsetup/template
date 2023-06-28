@@ -5,18 +5,27 @@ from pwnscripts import * #pip install pwnscripts
 import angr
 import claripy
 
+sl = lambda x: io.sendline(x.encode() if type(x) == str else x)
+sla = lambda x, y: io.sendlineafter(
+    x.encode() if type(x) == str else x, y.encode() if type(y) == str else y
+)
+se = lambda x: io.send(x.encode() if type(x) == str else x)
+sa = lambda x, y: io.sendafter(
+    x.encode() if type(x) == str else x, y.encode() if type(y) == str else y
+)
+
 # from string import printable
 printable="0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!\"#%&\\\'()\}\{_"
 
 dir_path =  os.path.dirname(__file__)
 patch = $patch
 if patch is not None:
-    subprocess.call(f"/home/evangelospro/.local/bin/pwninit --no-template --bin $binary", shell=True)
+    subprocess.call(f"pwninit --no-template --bin $binary", shell=True)
     binary_path = dir_path + "/$binary" + "_patched"
 else:
     binary_path = dir_path + f"/$binary"
 elf = context.binary = ELF(binary_path, checksec=True)
-base_addr = 0x00000000
+
 try:
     host = "$host"
     port = $port
@@ -43,6 +52,7 @@ def pwn_local():
     return process(elf.path, cwd=dir_path)
     
 def angr_init(payload):
+    base_addr = 0x00000000
     project = angr.Project(binary_path, main_opts={'base_addr': base_addr})
     state = project.factory.full_init_state(
     args=[binary_path],
@@ -66,7 +76,7 @@ def hook(l=None):
     
 # Find offset to EIP/RIP for buffer overflows
 def find_xip(payload, arch):
-    print(arch)
+    print(f"Finding offset to EIP/RIP for {arch}...")
     # Launch process and send the payload
     io = process(elf.path)
     io.recv()

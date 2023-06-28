@@ -15,6 +15,7 @@ RUN apt-get update && \
         wget \
         curl \
         git \
+        golang \
         python3 \
         python3-pip \
         zsh \
@@ -59,14 +60,6 @@ RUN apt-get update && \
 # IDK why this is needed
 RUN rm /usr/lib/python3.11/EXTERNALLY-MANAGED
 
-# RE tools
-RUN python3 -m pip install --upgrade pip && \
-        python3 -m pip install --user pwntools && \
-        python3 -m pip install --user ptrlib && \
-        python3 -m pip install --user ropper && \
-        python3 -m pip install --user ROPGadget && \
-        python3 -m pip install --user sagemath numpy
-
 # gdb  debuginfod
 RUN mkdir -p /etc/debuginfod/ && \
         echo "https://debuginfod.elfutils.org/" >> /etc/debuginfod/urls.urls
@@ -84,10 +77,6 @@ ENV PATH ${HOME}/.local/bin:${PATH}
 RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 ENV PATH ${HOME}/.cargo/bin:${PATH}
 
-COPY binaries /root/binaries
-RUN chown -R root:root /root/binaries
-RUN chmod +x /root/binaries/*
-
 # /etc/zsh/zshenv
 RUN echo 'export ZDOTDIR="$HOME/.config/zsh"' > /etc/zsh/zshenv
 
@@ -98,6 +87,8 @@ RUN chmod +x /usr/bin/bw
 RUN wget -O /tmp/chezmoi.deb https://github.com/twpayne/chezmoi/releases/download/v2.34.2/chezmoi_2.34.2_linux_amd64.deb
 RUN apt-get install -y /tmp/chezmoi.deb
 RUN chezmoi init --apply Evangelospro
+
+# This will install dotfile related AND Hacker tools
 RUN pip install -r ~/.local/share/chezmoi/requirements.txt
 
 # gdb
@@ -109,7 +100,10 @@ RUN git clone https://github.com/alset0326/peda-arm.git ~/.config/gdb/peda-arm
 RUN git clone https://github.com/hugsy/gef.git ~/.config/gdb/gef
 RUN sed -i "s/^alias pwnsetup=.*/alias pwnsetup='\/root\/pwnsetup\/pwnsetup.py'/" ~/.config/zsh/aliases.zsh
 
+# pwn setup scripts
+COPY pwnsetup /root/pwnsetup
+
 # Drop into zsh
-WORKDIR /root/binaries
+WORKDIR /root/data
 RUN rm -rf /tmp/*
 ENTRYPOINT [ "/usr/bin/zsh" ]

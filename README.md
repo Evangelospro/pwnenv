@@ -19,14 +19,14 @@ function pwnenv() {
         docker exec -it pwnenv zsh
     else
         echo "Starting container..."
-        docker run --net=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined --rm -it pwnenv zsh
+        docker run --net=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined --rm -it -v "$(pwd)":/root/data pwnenv
     fi
 }
 ```
 
 ## Tools:
 - pwntools
-- gdb (pwndbg, gef, peda) https://github.com/apogiatzis/gdb(inspiration)
+- gdb (pwndbg, gef, peda) inspired from https://github.com/apogiatzis/gdb
 - radare2
 - one_gadget
 - ropper
