@@ -1,10 +1,6 @@
 # PWNENV
-## I am always stuck in the occasion of havig my pwn environment broken or incomplete, when I need it the most.
-## This is a simple script to install all the tools I need to have a complete pwn environment.
 
-## Usage:
-docker build -t pwnenv .
-docker run -it pwnenv
+## I am always stuck in the occasion of havig my pwn environment broken or incomplete, when I need it the most. This is a simple script to install all the tools I need to have a complete pwn environment.
 
 ## Recommended setup:
 ### using zsh functions:
@@ -19,7 +15,7 @@ function pwnenv() {
         docker exec -it pwnenv zsh
     else
         echo "Starting container..."
-        docker run --net=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined --rm -it -v "$(pwd)":/root/data pwnenv
+        docker run --net=host --cap-add=SYS_PTRACE --security-opt seccomp=unconfined --rm -it -v "$(pwd)":/root/data --name pwnenv ghcr.io/evangelospro/pwnenv:latest
     fi
 }
 ```

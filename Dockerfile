@@ -4,13 +4,17 @@ FROM ubuntu:23.04
 # get basics
 USER root
 ENV HOME /root
+ENV LANG en_US.utf8
 ARG DEBIAN_FRONTEND=noninteractive
 
-RUN apt-get update && \
-        apt-get upgrade -y  && \
-        apt-get update && \
-        apt-get install -y \
+RUN apt update && \
+        apt upgrade -y  && \
+        apt update && \
+        apt install -y \
         lsd \
+	bat \
+        lolcat \
+        figlet \
         locales \
         wget \
         curl \
@@ -37,9 +41,12 @@ RUN apt-get update && \
         nano \
         less
 
+# Fix lolcat
+RUN ln -s /usr/games/lolcat /usr/bin/lolcat
+
 # Tools
-RUN apt-get update && \
-        apt-get install -y\
+RUN apt update && \
+        apt install -y\
         ipython3\
         ruby\
         ruby-dev\
@@ -85,7 +92,7 @@ RUN chsh -s $(which zsh)
 COPY bw /usr/bin/bw
 RUN chmod +x /usr/bin/bw
 RUN wget -O /tmp/chezmoi.deb https://github.com/twpayne/chezmoi/releases/download/v2.34.2/chezmoi_2.34.2_linux_amd64.deb
-RUN apt-get install -y /tmp/chezmoi.deb
+RUN apt install -y /tmp/chezmoi.deb
 RUN chezmoi init --apply Evangelospro
 
 # This will install dotfile related AND Hacker tools
