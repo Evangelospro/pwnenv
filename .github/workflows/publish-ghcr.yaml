@@ -13,4 +13,4 @@ jobs:
         run: |
           docker login --username evangelospro --password ${{ secrets.GITHUB_TOKEN }} ghcr.io
           docker build -t ghcr.io/evangelospro/pwnenv:latest .
-          docker pushghcr.io/evangelospro/pwnenv:latest
+          docker push ghcr.io/evangelospro/pwnenv:latest
