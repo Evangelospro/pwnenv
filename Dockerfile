@@ -101,10 +101,11 @@ RUN pip install -r ~/.local/share/chezmoi/requirements.txt
 # gdb
 COPY locale.gen /etc/locale.gen
 RUN locale-gen en_US.UTF-8
-RUN git clone https://github.com/pwndbg/pwndbg.git ~/.config/gdb/pwndbg
-RUN git clone https://github.com/longld/peda.git ~/.config/gdb/peda
-RUN git clone https://github.com/alset0326/peda-arm.git ~/.config/gdb/peda-arm
-RUN git clone https://github.com/hugsy/gef.git ~/.config/gdb/gef
+# The below are already installed by chezmoi externals
+# RUN git clone https://github.com/pwndbg/pwndbg.git ~/.config/gdb/pwndbg
+# RUN git clone https://github.com/longld/peda.git ~/.config/gdb/peda
+# RUN git clone https://github.com/alset0326/peda-arm.git ~/.config/gdb/peda-arm
+# RUN git clone https://github.com/hugsy/gef.git ~/.config/gdb/gef
 RUN sed -i "s/^alias pwnsetup=.*/alias pwnsetup='\/root\/pwnsetup\/pwnsetup.py'/" ~/.config/zsh/aliases.zsh
 
 # pwn setup scripts
