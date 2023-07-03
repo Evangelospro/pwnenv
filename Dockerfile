@@ -111,6 +111,10 @@ RUN sed -i "s/^alias pwnsetup=.*/alias pwnsetup='\/root\/pwnsetup\/pwnsetup.py'/
 # pwn setup scripts
 COPY pwnsetup /root/pwnsetup
 
+# Autopwners
+RUN git clone https://github.com/guyinatuxedo/remenissions /root/remenissions
+RUN /root/remenissions/setup.sh
+
 # Drop into zsh
 WORKDIR /root/data
 RUN rm -rf /tmp/*
