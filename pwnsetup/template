@@ -42,6 +42,7 @@ def pwn_remote():
     return remote(host, port)
 
 def pwn_gdb():
+    context.terminal = ["wezterm", "-e"]
     gdbscript = """
     init-pwndbg
     continue

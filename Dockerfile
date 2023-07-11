@@ -115,6 +115,10 @@ COPY pwnsetup /root/pwnsetup
 RUN git clone https://github.com/guyinatuxedo/remenissions /root/remenissions
 RUN /root/remenissions/setup.sh
 
+# Terminal binary
+RUN wget https://github.com/wez/wezterm/releases/download/nightly/wezterm-nightly.Ubuntu22.04.deb -O /tmp/wezterm.deb
+RUN apt install -y /tmp/wezterm.deb
+
 # Drop into zsh
 WORKDIR /root/data
 RUN rm -rf /tmp/*
