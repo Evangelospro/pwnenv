@@ -8,7 +8,6 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 RUN apt update && \
         apt upgrade -y  && \
-        apt update && \
         apt install -y \
         lolcat \
         figlet \
@@ -19,6 +18,7 @@ RUN apt update && \
         golang \
         python3 \
         python3-pip \
+        python3-venv \
         zsh \
         file \
         ltrace \
@@ -42,8 +42,7 @@ RUN apt update && \
 RUN ln -s /usr/games/lolcat /usr/bin/lolcat
 
 # Tools
-RUN apt update && \
-        apt install -y\
+RUN apt install -y\
         ipython3\
         ruby\
         ruby-dev\
@@ -60,9 +59,6 @@ RUN apt update && \
         # ctfmate
         patchelf\
         elfutils
-
-# IDK why this is needed
-RUN rm /usr/lib/python3.11/EXTERNALLY-MANAGED
 
 # gdb  debuginfod
 RUN mkdir -p /etc/debuginfod/ && \
@@ -93,7 +89,7 @@ RUN apt install -y /tmp/chezmoi.deb
 RUN chezmoi init --apply Evangelospro
 
 # This will install dotfile related AND Hacker tools
-RUN pip install -r ~/.local/share/chezmoi/requirements.txt
+RUN pip install -r ~/.local/share/chezmoi/requirements.txt --break-system
 
 # gdb
 COPY locale.gen /etc/locale.gen
