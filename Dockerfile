@@ -1,11 +1,11 @@
-FROM ubuntu:23.04
+FROM ubuntu:latest
 
 # ----- Setup Enviornment ----- #
-# get basics
 USER root
 ENV HOME /root
 ENV LANG en_US.utf8
 ARG DEBIAN_FRONTEND=noninteractive
+RUN hostnamectl set-hostname PWNSETUP
 
 RUN apt update && \
         apt upgrade -y  && \
@@ -106,7 +106,6 @@ RUN locale-gen en_US.UTF-8
 # RUN git clone https://github.com/longld/peda.git ~/.config/gdb/peda
 # RUN git clone https://github.com/alset0326/peda-arm.git ~/.config/gdb/peda-arm
 # RUN git clone https://github.com/hugsy/gef.git ~/.config/gdb/gef
-RUN sed -i "s/^alias pwnsetup=.*/alias pwnsetup='\/root\/pwnsetup\/pwnsetup.py'/" ~/.config/zsh/aliases.zsh
 
 # pwn setup scripts
 COPY pwnsetup /root/pwnsetup
