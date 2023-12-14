@@ -10,8 +10,6 @@ RUN apt update && \
         apt upgrade -y  && \
         apt update && \
         apt install -y \
-        lsd \
-	bat \
         lolcat \
         figlet \
         locales \
