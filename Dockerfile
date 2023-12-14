@@ -5,7 +5,6 @@ USER root
 ENV HOME /root
 ENV LANG en_US.utf8
 ARG DEBIAN_FRONTEND=noninteractive
-RUN hostnamectl set-hostname PWNSETUP
 
 RUN apt update && \
         apt upgrade -y  && \
