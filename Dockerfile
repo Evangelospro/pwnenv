@@ -84,9 +84,7 @@ RUN echo 'export ZDOTDIR="$HOME/.config/zsh"' > /etc/zsh/zshenv
 RUN chsh -s $(which zsh)
 COPY bw /usr/bin/bw
 RUN chmod +x /usr/bin/bw
-RUN wget -O /tmp/chezmoi.deb https://github.com/twpayne/chezmoi/releases/download/v2.34.2/chezmoi_2.34.2_linux_amd64.deb
-RUN apt install -y /tmp/chezmoi.deb
-RUN chezmoi init --apply Evangelospro
+RUN sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply Evangelospro
 
 # This will install dotfile related AND Hacker tools
 RUN pip install -r ~/.local/share/chezmoi/requirements.txt --break-system
